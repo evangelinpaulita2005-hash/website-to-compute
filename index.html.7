@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Aaron!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #a8d8f0; /* pastel blue */
+      overflow: hidden;
+      font-family: 'Press Start 2P', cursive;
+    }
+
+    .paper {
+      position: relative;
+      width: 500px;
+      height: 300px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      transform: scaleY(0);
+      animation: openPaper 2s ease forwards;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    @keyframes openPaper {
+      0% { transform: scaleY(0); }
+      60% { transform: scaleY(1.1); }
+      100% { transform: scaleY(1); }
+    }
+
+    h1 {
+      color: #333;
+      font-size: 16px;
+      text-align: center;
+      margin: 0;
+    }
+
+    .cake {
+      margin-top: 15px;
+      width: 60px;
+      height: 60px;
+      image-rendering: pixelated;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background-color: red;
+      top: -10px;
+      animation: fall linear forwards;
+      image-rendering: pixelated;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="paper">
+    <h1>Happy Birthday Aaron !</h1>
+    <img class="cake" src="https://i.imgur.com/yYQzq6x.png" alt="Pixel Cake">
+  </div>
+
+  <!-- Pop sound -->
+  <audio id="popSound" src="https://freesound.org/data/previews/341/341695_6261196-lq.mp3"></audio>
+
+  <script>
+    // play pop sound after paper animation
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("popSound").play();
+      }, 1800); // sync with paper opening
+    });
+
+    // generate confetti
+    function createConfetti() {
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti");
+      document.body.appendChild(confetti);
+
+      // random color
+      const colors = ["#ff4d4d", "#ffcc00", "#66ccff", "#99ff66", "#ff66cc"];
+      confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+
+      // random start position
+      confetti.style.left = Math.random() * window.innerWidth + "px";
+
+      // random size
+      const size = Math.floor(Math.random() * 8) + 5;
+      confetti.style.width = size + "px";
+      confetti.style.height = size + "px";
+
+      // random duration
+      const duration = Math.random() * 3 + 2;
+      confetti.style.animationDuration = duration + "s";
+
+      // remove after falling
+      setTimeout(() => {
+        confetti.remove();
+      }, duration * 1000);
+    }
+
+    setInterval(createConfetti, 150);
+  </script>
+</body>
+</html>
